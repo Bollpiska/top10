@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -10,7 +12,7 @@ import domain.Game;
 public class DataAccessImpl implements DataAccess {
 
     @Override
-    public void insert() {
+    public void insert(List<Game> gameList) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("toptiodataDB");
         EntityManager em = emf.createEntityManager();
@@ -18,9 +20,10 @@ public class DataAccessImpl implements DataAccess {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        Game game1 = new Game("Nomolop", 10.0, "Nice spel", "1897", 4);
+        for (Game game : gameList) {
 
-        em.persist(game1);
+            em.persist(game);
+        }
 
         tx.commit();
         em.close();

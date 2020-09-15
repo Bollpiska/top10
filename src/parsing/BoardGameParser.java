@@ -1,6 +1,8 @@
 package parsing;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,11 +16,11 @@ import dao.DataAccess;
 import dao.DataAccessImpl;
 import domain.Game;
 
-public class XMLParser {
+public class BoardGameParser {
 
     //    Top10Service service = new Top10Service();
 
-    public static void parseXML(String xml) {
+    public static List<Game> parseXML(String xml) {
 
         DataAccess da = new DataAccessImpl();
 
@@ -27,6 +29,8 @@ public class XMLParser {
         //   File xmlFile = new File(xml);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
+        List<Game> gameList = new ArrayList<Game>();
+
         try {
             dBuilder = dbFactory.newDocumentBuilder();
 
@@ -35,6 +39,7 @@ public class XMLParser {
             NodeList nList = doc.getElementsByTagName("boardgame");
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
+                String ratingString = null;
                 String name = null;
                 double rating = 0;
                 String description = null;
@@ -55,13 +60,25 @@ public class XMLParser {
                     Element ratingElement = (Element) eElement.getElementsByTagName("ratings").item(0);
                     Element ranksElement = (Element) ratingElement.getElementsByTagName("ranks").item(0);
                     Element rankElement = (Element) ranksElement.getElementsByTagName("rank").item(0);
-                    rating = Float.parseFloat(rankElement.getAttribute("bayesaverage"));
+
+                    //                    ratingString = rankElement.getAttribute("bayesaverage");
+                    //                    if (ratingString == "Not Ranked") {
+                    //                        rating = 0;
+                    //                    } else {
+                    //                        rating = Float.parseFloat(ratingString);
+
+                    try {
+                        rating = Float.parseFloat(rankElement.getAttribute("bayesaverage"));
+                    } catch (Exception c) {
+                        rating = 0;
+                    }
 
                 }
 
                 Game game = new Game(name, rating, description, releaseDate, maxNumPlayers);
+                gameList.add(game);
                 //                registerGame(game);
-                da.insert();
+                //da.insert();
 
                 System.out.println("name: " + name + "\ndesc: " + description + "\nreleaseDate: " + releaseDate
                     + "\nrating: " + rating + "\nmaxplayers " + maxNumPlayers);
@@ -72,6 +89,8 @@ public class XMLParser {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        return gameList;
 
     }
 
