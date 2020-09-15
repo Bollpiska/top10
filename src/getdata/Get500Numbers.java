@@ -2,16 +2,17 @@ package getdata;
 
 public class Get500Numbers {
 
-    public String getNumbers() {
+    public String getNumbers(int startnummer) {
 
-        String games = "1,";
-        int nummer = 2;
+        String games = startnummer + ",";
+        int nummer = (startnummer + 499);
 
-        while (nummer < 500) {
-            games = games + nummer + ",";
-            nummer++;
+        while (startnummer < nummer) {
+            startnummer++;
+            games = games + startnummer + ",";
+
         }
-        games = games + "500";
+        games = games + nummer;
         return games;
     }
 
