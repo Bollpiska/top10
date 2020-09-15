@@ -10,14 +10,17 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import dao.DataAccess;
+import dao.DataAccessImpl;
 import domain.Game;
-import service.Top10Service;
 
 public class XMLParser {
 
-    Top10Service service = new Top10Service();
+    //    Top10Service service = new Top10Service();
 
     public static void parseXML(String xml) {
+
+        DataAccess da = new DataAccessImpl();
 
         System.out.println("hej");
 
@@ -57,7 +60,8 @@ public class XMLParser {
                 }
 
                 Game game = new Game(name, rating, description, releaseDate, maxNumPlayers);
-                registerGame(game);
+                //                registerGame(game);
+                da.insert();
 
                 System.out.println("name: " + name + "\ndesc: " + description + "\nreleaseDate: " + releaseDate
                     + "\nrating: " + rating + "\nmaxplayers " + maxNumPlayers);

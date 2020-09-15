@@ -13,7 +13,7 @@ public class GetBGData {
     public static void main(String[] args) throws IOException {
 
         //URL urlForGetRequest = new URL("https://jsonplaceholder.typicode.com/posts/1");
-        URL urlForGetRequest = new URL("https://www.boardgamegeek.com/xmlapi/boardgame/1020,1028?stats=1");
+        URL urlForGetRequest = new URL("https://www.boardgamegeek.com/xmlapi/boardgame/1020?stats=1");
         String readLine = null;
         HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
         conection.setRequestMethod("GET");
