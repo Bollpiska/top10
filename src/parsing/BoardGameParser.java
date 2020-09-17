@@ -61,12 +61,6 @@ public class BoardGameParser {
                     Element ranksElement = (Element) ratingElement.getElementsByTagName("ranks").item(0);
                     Element rankElement = (Element) ranksElement.getElementsByTagName("rank").item(0);
 
-                    //                    ratingString = rankElement.getAttribute("bayesaverage");
-                    //                    if (ratingString == "Not Ranked") {
-                    //                        rating = 0;
-                    //                    } else {
-                    //                        rating = Float.parseFloat(ratingString);
-
                     try {
                         rating = Float.parseFloat(rankElement.getAttribute("bayesaverage"));
                     } catch (Exception c) {
@@ -77,8 +71,6 @@ public class BoardGameParser {
 
                 Game game = new Game(name, rating, description, releaseDate, maxNumPlayers);
                 gameList.add(game);
-                //                registerGame(game);
-                //da.insert();
 
                 System.out.println("name: " + name + "\ndesc: " + description + "\nreleaseDate: " + releaseDate
                     + "\nrating: " + rating + "\nmaxplayers " + maxNumPlayers);
