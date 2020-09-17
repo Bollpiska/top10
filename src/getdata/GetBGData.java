@@ -16,9 +16,12 @@ public class GetBGData {
 
     public static void main(String[] args) throws IOException {
 
+        String numbers = Get500Numbers.getNumbers(531);
+        System.out.println(numbers);
+
         //URL urlForGetRequest = new URL("https://jsonplaceholder.typicode.com/posts/1");
         DataAccess dao = new DataAccessImpl();
-        URL urlForGetRequest = new URL("https://www.boardgamegeek.com/xmlapi/boardgame/1020,1021,1082?stats=1");
+        URL urlForGetRequest = new URL("https://www.boardgamegeek.com/xmlapi/boardgame/" + numbers + "?stats=1");
         String readLine = null;
         HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
         conection.setRequestMethod("GET");

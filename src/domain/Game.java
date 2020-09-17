@@ -18,7 +18,7 @@ public class Game implements Serializable {
 
     private double rating;
 
-    @Column(length = 1000)
+    @Column(length = 15000)
     private String description;
     private String releaseDate;
     private int maxNumPlayers;

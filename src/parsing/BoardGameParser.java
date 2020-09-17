@@ -36,9 +36,15 @@ public class BoardGameParser {
 
             Document doc = dBuilder.parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
             doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("boardgame");
+            //            NodeList nList = doc.getElementsByTagName("boardgame");
 
-            for (int temp = 0; temp < nList.getLength(); temp++) {
+            Element node = (Element) doc.getFirstChild();
+
+            NodeList nList = node.getChildNodes();
+            System.out.println(nList.getLength());
+
+            // Av någon anledning får vi varannan null, så därav knasig loop!
+            for (int temp = 1; temp < nList.getLength(); temp += 2) {
                 String ratingString = null;
                 String name = null;
                 double rating = 0;
