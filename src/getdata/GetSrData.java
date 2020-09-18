@@ -1,7 +1,6 @@
 package getdata;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -9,19 +8,16 @@ import java.util.List;
 
 import dao.DataAccess;
 import dao.DataAccessImpl;
-import domain.Game;
-import parsing.BoardGameParser;
+import domain.Song;
+import parsing.SRParser;
 
-public class GetBGData {
+public class GetSrData {
 
-    public static void requestBGData() throws IOException {
-
-        String numbers = Get500Numbers.getNumbers(531);
-        System.out.println(numbers);
+    public static void requestSRData(String url) throws Exception {
 
         //URL urlForGetRequest = new URL("https://jsonplaceholder.typicode.com/posts/1");
         DataAccess dao = new DataAccessImpl();
-        URL urlForGetRequest = new URL("https://www.boardgamegeek.com/xmlapi/boardgame/" + numbers + "?stats=1");
+        URL urlForGetRequest = new URL(url);
         String readLine = null;
         HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
         conection.setRequestMethod("GET");
@@ -35,12 +31,13 @@ public class GetBGData {
                 response.append("\n");
             }
             in.close();
+
             // print result
             System.out.println("XML String Result " + response.toString());
             //GetAndPost.POSTRequest(response.toString());
 
-            List<Game> gameList = BoardGameParser.parseXML(response.toString());
-            dao.insertGame(gameList);
+            List<Song> songList = SRParser.parseXML(response.toString());
+            dao.insertSong(songList);
         } else {
             System.out.println("GET NOT WORKED");
         }

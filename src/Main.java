@@ -1,26 +1,23 @@
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-
-import domain.Game;
+import getdata.GetSrData;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("toptiodataDB");
-        EntityManager em = emf.createEntityManager();
+        //        try {
+        //            GetBGData.requestBGData();
+        //        } catch (IOException e) {
+        //            // TODO Auto-generated catch block
+        //            e.printStackTrace();
+        //        }
 
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        Game game1 = new Game("Fia med Knuff", 10.0, "Jävligt nice spel", "1897", 4);
-
-        em.persist(game1);
-
-        tx.commit();
-        em.close();
+        try {
+            GetSrData.requestSRData(
+                "http://api.sr.se/api/v2/playlists/getplaylistbychannelid?id=164&startdatetime=2020-09-01&enddatetime=2020-09-03&size=500");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
